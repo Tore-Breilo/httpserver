@@ -15,7 +15,8 @@ namespace httpserver
             serversocket.Start();
 
             TcpClient connectionSocket = serversocket.AcceptTcpClient();
-
+            // nu kan jeg ser CW'en
+            // kan du se mig nu?
             Console.WriteLine("Hello http server");
             Console.WriteLine(  "Hej fra Tore");
 
