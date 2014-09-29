@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +12,6 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
-            // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888
             TcpListener serversocket = new TcpListener(65080);
             serversocket.Start();
 
@@ -31,16 +30,25 @@ namespace httpserver
             
             Console.WriteLine("Hej fra Tore");
 
-            //Stream ns = connectionSocket.GetStream();
+            Stream ns = connectionSocket.GetStream();
 
-            //StreamReader sr = new StreamReader(ns);
-            //StreamWriter sw = new StreamWriter(ns);
+            StreamReader sr = new StreamReader(ns);
+            StreamWriter sw = new StreamWriter(ns);
 
-           
-            //ns.Close();
+<<<<<<< HEAD
+            // nu kan jeg ser CW'en
+            // kan du se mig nu?
             // også den her
+            // så er der her en komment som bør være in sync
             Console.WriteLine("Hello http server");
             Console.WriteLine("Hej fra Tore");
+=======
+           
+            ns.Close();
+            connectionSocket.Close();
+            
+
+>>>>>>> 8d775c55a0751d798403bf95591bcf62e6bc9923
 
         }
     }
