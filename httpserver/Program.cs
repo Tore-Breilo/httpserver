@@ -18,6 +18,7 @@ namespace httpserver
             // nu kan jeg ser CW'en
             // kan du se mig nu?
             // også den her
+            // så er der her en komment som bør være in sync
             Console.WriteLine("Hello http server");
             Console.WriteLine("Hej fra Tore");
 
