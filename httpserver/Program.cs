@@ -17,7 +17,7 @@ namespace httpserver
             TcpClient connectionSocket = serversocket.AcceptTcpClient();
 
             Console.WriteLine("Hello http server");
-            Console.WriteLine(  "Hej fra Tore");
+            Console.WriteLine("Hej fra Tore");
 
         }
     }
