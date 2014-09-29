@@ -20,6 +20,10 @@ namespace httpserver
             Console.WriteLine("Hej fra Tore");
 
             Stream ns = connectionSocket.GetStream();
+
+            StreamReader sr = new StreamReader(ns);
+            StreamWriter sw = new StreamWriter(ns);
+
             // nu kan jeg ser CW'en
             // kan du se mig nu?
             // også den her
