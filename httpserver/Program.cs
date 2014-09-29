@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -15,6 +16,14 @@ namespace httpserver
             serversocket.Start();
 
             TcpClient connectionSocket = serversocket.AcceptTcpClient();
+            Console.WriteLine("Hello http server");
+            Console.WriteLine("Hej fra Tore");
+
+            Stream ns = connectionSocket.GetStream();
+
+            StreamReader sr = new StreamReader(ns);
+            StreamWriter sw = new StreamWriter(ns);
+
             // nu kan jeg ser CW'en
             // kan du se mig nu?
             // også den her
