@@ -15,8 +15,19 @@ namespace httpserver
             TcpListener serversocket = new TcpListener(65080);
             serversocket.Start();
 
-            TcpClient connectionSocket = serversocket.AcceptTcpClient();
-            Console.WriteLine("Hello http server");
+            while (true)
+            {
+                TcpClient connectionSocket = serversocket.AcceptTcpClient();
+                Console.WriteLine("Hello http server");
+                EchoService service = new EchoService(connectionSocket);
+                Task.Factory.StartNew(() => service.DoIt());
+
+
+
+
+            }
+            
+            
             Console.WriteLine("Hej fra Tore");
 
             Stream ns = connectionSocket.GetStream();
@@ -24,10 +35,9 @@ namespace httpserver
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
 
-            // nu kan jeg ser CW'en
-            // kan du se mig nu?
-            // også den her
-            // så er der her en komment som bør være in sync
+           
+            ns.Close();
+            // ogs� den her
             Console.WriteLine("Hello http server");
             Console.WriteLine("Hej fra Tore");
 
