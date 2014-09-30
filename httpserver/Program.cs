@@ -12,6 +12,12 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
+
+
+
+
+            //http://localhost:8888/test/
+            
             // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888
             TcpListener serversocket = new TcpListener(8888);
             serversocket.Start();
