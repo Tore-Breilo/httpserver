@@ -10,6 +10,8 @@ namespace httpserver
 {
     class Program
     {
+        public const string CrLf = "\r\n";
+        const string Lf = "\n";
         static void Main(string[] args)
         {
             // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888

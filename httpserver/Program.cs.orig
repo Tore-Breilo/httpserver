@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +12,8 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
-            TcpListener serversocket = new TcpListener(65080);
+            // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888
+            TcpListener serversocket = new TcpListener(8888);
             serversocket.Start();
 
             while (true)
@@ -20,35 +21,28 @@ namespace httpserver
                 TcpClient connectionSocket = serversocket.AcceptTcpClient();
                 Console.WriteLine("Hello http server");
                 EchoService service = new EchoService(connectionSocket);
+<<<<<<< HEAD
+               Task.Factory.StartNew(() => service.DoIt());
+=======
                 Task.Factory.StartNew(() => service.DoIt());
-
-
+>>>>>>> 5e07697d4d2270faf1ce6ffe8d748b784ea0d0c1
 
 
             }
             
             
-            Console.WriteLine("Hej fra Tore");
+            //Console.WriteLine("Hej fra Tore");
 
-            Stream ns = connectionSocket.GetStream();
+            //Stream ns = connectionSocket.GetStream();
 
-            StreamReader sr = new StreamReader(ns);
-            StreamWriter sw = new StreamWriter(ns);
+            //StreamReader sr = new StreamReader(ns);
+            //StreamWriter sw = new StreamWriter(ns);
 
-<<<<<<< HEAD
-            // nu kan jeg ser CW'en
-            // kan du se mig nu?
-            // også den her
-            // så er der her en komment som bør være in sync
-            Console.WriteLine("Hello http server");
-            Console.WriteLine("Hej fra Tore");
-=======
            
-            ns.Close();
-            connectionSocket.Close();
-            
-
->>>>>>> 8d775c55a0751d798403bf95591bcf62e6bc9923
+            //ns.Close();
+            // også den her
+            //Console.WriteLine("Hello http server");
+            //Console.WriteLine("Hej fra Tore");
 
         }
     }
