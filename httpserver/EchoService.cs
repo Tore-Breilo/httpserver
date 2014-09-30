@@ -26,6 +26,7 @@ namespace httpserver
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
+            // skal der være en autoflush? er der noget der gemmer sig i en buffer?
 
             string message = sr.ReadLine();
             string answer;
