@@ -24,7 +24,7 @@ namespace httpserver
             while (true)
             {
                 TcpClient connectionSocket = serversocket.AcceptTcpClient();
-                Console.WriteLine("Hello http server");
+                //Console.WriteLine("Hello http server");
                 EchoService service = new EchoService(connectionSocket);
                Task.Factory.StartNew(() => service.DoIt());
 
@@ -32,6 +32,17 @@ namespace httpserver
             }
             
    
+            
+
+            //Stream ns = connectionSocket.GetStream();
+
+            //StreamReader sr = new StreamReader(ns);
+            //StreamWriter sw = new StreamWriter(ns);
+
+           
+            //ns.Close();
+            // også den her
+            
         }
     }
 }
