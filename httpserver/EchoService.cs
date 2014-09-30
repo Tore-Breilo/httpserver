@@ -34,16 +34,19 @@ namespace httpserver
             sw.AutoFlush = true;                        // automatisk "flusher"
             
             string message = sr.ReadLine();
-            string answer;
+            string[] _request = message.Split('32');
+
+            
             string reply= "HTTP/1.0" + Sp + "200" + Sp + "OK" + Lf + "Hej Verden" + CrLf;
             
             //læser fra browseren
             while (message != null && message != "")
             {
                 Console.WriteLine("Client: " + message);
-                answer = message.ToUpper();
+               
                 sw.WriteLine(reply);
                 message = sr.ReadLine();
+                
             }
 
             ns.Close();
