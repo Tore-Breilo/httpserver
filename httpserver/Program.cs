@@ -14,9 +14,10 @@ namespace httpserver
         const string Lf = "\n";
         static void Main(string[] args)
         {
-            // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888
+            // Todo: porten bør passe med en web-browser eg. 80, 8080 eller 8888
             TcpListener serversocket = new TcpListener(8888);
             serversocket.Start();
+            Console.WriteLine("Hello http server");
 
             while (true)
             {
@@ -29,7 +30,7 @@ namespace httpserver
             }
             
             
-            //Console.WriteLine("Hej fra Tore");
+            Console.WriteLine("Hej fra Tore");
 
             //Stream ns = connectionSocket.GetStream();
 
@@ -39,8 +40,8 @@ namespace httpserver
            
             //ns.Close();
             // også den her
-            //Console.WriteLine("Hello http server");
-            //Console.WriteLine("Hej fra Tore");
+            Console.WriteLine("Hello http server");
+            Console.WriteLine("Hej fra Tore");
 
         }
     }
