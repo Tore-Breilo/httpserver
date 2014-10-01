@@ -40,14 +40,15 @@ namespace httpserver
             string reply= "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + CrLf + messageSplit[1];
 
 
-            sw.WriteLine(reply);
-
+            sw.Write(reply);
             
-            
-	  
 
-            //læser fra browseren
-            /*while (message != null && message != "")
+
+
+
+
+                //læser fra browseren
+                /*while (message != null && message != "")
             {
                 Console.WriteLine("Client: " + message);
                 answer = message.ToUpper();
