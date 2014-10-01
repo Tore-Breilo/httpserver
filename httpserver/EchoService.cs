@@ -50,24 +50,31 @@ namespace httpserver
 
                         try
                         {
-                            using (FileStream fs = new FileStream(RootCatalog+messageSplit[1],
+                            using (FileStream fr = new FileStream(RootCatalog+messageSplit[1],
                                 FileMode.Open, FileAccess.Read))
                             {
                                 // Read the source file into a byte array. 
-                                byte[] data = new byte[fs.Length];
-                                fs.Read(data,0, Convert.ToInt32(fs.Length));
-                                string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf +
-                                               //"For some reason you requested the file:" + messageSplit[1] + CrLf + CrLf;
-                                               "Connection: close" + CrLf +
-                                               "Date: Tue, 09 Aug 2011 15:44:04 GMT" + CrLf +
-                                               "Server: KasperTorian/0.0.01" + CrLf +
-                                               "Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT" + CrLf +
-                                               "Content-Length: " + Convert.ToString(fs.Length) + CrLf +
-                                               "Content-Type: text/html" + CrLf + CrLf;
+                                byte[] data = new byte[fr.Length];
+
+                                fr.Read(data,0, Convert.ToInt32(fr.Length));
+                                
+                                string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf +     // Status line
+                                               "Connection: close" + CrLf +                     //Header
+                                               "Date: Tue, 09 Aug 2011 15:44:04 GMT" + CrLf +   //Header
+                                               "Server: KasperTorian/0.0.01" + CrLf +           //Header
+                                               "Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT" + CrLf + //Header
+                                               "Content-Length: " + Convert.ToString(fr.Length) + CrLf + //Header
+                                               "Content-Type: text/html" + CrLf + CrLf;         //Header
                                                
                                 sw.Write(reply);
-                                sw.Write(data);
-                            Console.WriteLine("Dette burde være fil-indhold: /n"+data);    
+                                sw.Flush();
+                                ns.Write(data, 0 , data.Count());                       //data
+                                string temp = "";
+                                for (int i = 0; i < data.Count(); i++)
+                                {
+                                    temp+=Convert.ToChar(data[i]);
+                                }
+                            Console.WriteLine("Dette burde være fil-indhold: "+temp);    
                             }
                         }
                         catch (FileNotFoundException ioEx)
