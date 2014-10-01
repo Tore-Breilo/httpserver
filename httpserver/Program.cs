@@ -10,6 +10,7 @@ namespace httpserver
 {
     class Program
     {
+        private static readonly string RootCatalog = "c:/temp";
         public const string CrLf = "\r\n";
         const string Lf = "\n";
         static void Main(string[] args)
