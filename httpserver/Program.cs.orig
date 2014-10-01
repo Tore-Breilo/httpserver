@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,28 +11,31 @@ namespace httpserver
 {
     class Program
     {
+        public const string CrLf = "\r\n";
+        const string Lf = "\n";
         static void Main(string[] args)
         {
-            // Todo: porten bør passe med en web-browser ie 80, 8080 eller 8888
-            TcpListener serversocket = new TcpListener(8888);
+            // Todo: porten bør passe med en web-browser eg. 80, 8080 eller 8888
+
+            TcpListener serversocket = new TcpListener(IPAddress.Parse("127.0.0.1"),8888);
             serversocket.Start();
+            Console.WriteLine("Hello http server");
 
             while (true)
             {
                 TcpClient connectionSocket = serversocket.AcceptTcpClient();
-                Console.WriteLine("Hello http server");
+                //Console.WriteLine("Hello http server");
                 EchoService service = new EchoService(connectionSocket);
-<<<<<<< HEAD
                Task.Factory.StartNew(() => service.DoIt());
-=======
-                Task.Factory.StartNew(() => service.DoIt());
->>>>>>> 5e07697d4d2270faf1ce6ffe8d748b784ea0d0c1
 
 
             }
             
+<<<<<<< HEAD
+   
+=======
             
-            //Console.WriteLine("Hej fra Tore");
+            
 
             //Stream ns = connectionSocket.GetStream();
 
@@ -41,9 +45,9 @@ namespace httpserver
            
             //ns.Close();
             // også den her
-            //Console.WriteLine("Hello http server");
-            //Console.WriteLine("Hej fra Tore");
+            
 
+>>>>>>> 624a8068f82e5feb58415ff011119fa9875404cb
         }
     }
 }

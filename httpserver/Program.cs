@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,12 @@ namespace httpserver
         private static readonly string RootCatalog = "c:/temp";
         public const string CrLf = "\r\n";
         const string Lf = "\n";
+
         static void Main(string[] args)
         {
             // Todo: porten bør passe med en web-browser eg. 80, 8080 eller 8888
-            TcpListener serversocket = new TcpListener(8888);
+
+            TcpListener serversocket = new TcpListener(IPAddress.Parse("127.0.0.1"),8888);
             serversocket.Start();
             Console.WriteLine("Hello http server");
 
@@ -30,19 +33,7 @@ namespace httpserver
 
             }
             
-            
-            
-
-            //Stream ns = connectionSocket.GetStream();
-
-            //StreamReader sr = new StreamReader(ns);
-            //StreamWriter sw = new StreamWriter(ns);
-
-           
-            //ns.Close();
-            // også den her
-            
-
+   
         }
     }
 }
