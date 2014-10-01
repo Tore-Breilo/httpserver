@@ -13,6 +13,7 @@ namespace httpserver
     {
         public const string CrLf = "\r\n";
         const string Lf = "\n";
+
         static void Main(string[] args)
         {
             // Todo: porten bør passe med en web-browser eg. 80, 8080 eller 8888
@@ -32,17 +33,6 @@ namespace httpserver
             }
             
    
-            
-
-            //Stream ns = connectionSocket.GetStream();
-
-            //StreamReader sr = new StreamReader(ns);
-            //StreamWriter sw = new StreamWriter(ns);
-
-           
-            //ns.Close();
-            // også den her
-            
         }
     }
 }
