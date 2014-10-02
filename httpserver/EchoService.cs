@@ -40,7 +40,7 @@ namespace httpserver
             sw.AutoFlush = true; // automatisk "flusher"
             //var test = new Request();
             //test.Read(ns);
-            string message = sr.ReadToEnd();
+            string message = sr.ReadLine();
             Console.WriteLine(message);
 
             if (message != null && message != "")
@@ -84,9 +84,10 @@ namespace httpserver
                                     {
                                         temp += Convert.ToChar(data[i]);
                                     }
-                                    reply += temp;
+                                    //reply += temp;
                                     sw.Write(reply);
                                     sw.Flush();
+                                    ns.Write(data, 0, data.Count()); //data
                                     Console.WriteLine("Dette burde være fil-indhold: " + temp);
                                 }
                                 Console.WriteLine("" + File.GetLastAccessTime(RootCatalog + messageSplit[1]));
