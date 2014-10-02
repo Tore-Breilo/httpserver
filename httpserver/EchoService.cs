@@ -34,7 +34,7 @@ namespace httpserver
         //Vores DO-IT - Metode
         internal void DoIt()
         {
-            Stream ns = connectionSocket.GetStream();
+            Stream ns = this.connectionSocket.GetStream();
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // automatisk "flusher"
@@ -55,55 +55,49 @@ namespace httpserver
                             try
                             {
                                 string filename = RootCatalog + messageSplit[1];
-                                using (FileStream fr = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
                                 {
                                     // Read the source file into a byte array. 
-                                    byte[] data = new byte[fr.Length];
+                                    byte[] data = new byte[fs.Length];
+                                    fs.Read(data,0, Convert.ToInt32(fs.Length));
 
-                                // Hvis filen ikke eksistere, så bliver der lavet en fejl 404.
-                                try
-                                {
-                                    fr.Read(data, 0, Convert.ToInt32(fr.Length));
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine("404: File Not Found");
-                                }
-
-                               string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf +     // Status line
-                                               "Connection: "   + CrLf +                     //Header
-                                               "Date: " + File.GetLastAccessTime(RootCatalog + messageSplit[1]) + CrLf +   //Header Todo datenow
+                                    string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + // Status line
+                                                   "Connection: close" + CrLf + //Header
+                                                   "Date: " + File.GetLastAccessTime(RootCatalog + messageSplit[1]) +
+                                                   CrLf + //Header Todo datenow
                                                    "Server: CaKaTo/0.0.02" + CrLf + //Header
-                                               "Last-Modified: " + File.GetLastWriteTime(RootCatalog + messageSplit[1]) + CrLf + //Header Todo filedate
+                                                   "Last-Modified: " + File.GetLastWriteTime(RootCatalog + messageSplit[1]) + CrLf +
                                                    //Header Todo filedate
-                                               "Content-Type: txt.html" + CrLf + CrLf;         //Header Todo typen skal læses fra fil
-                                                   "Content-Type: text/html" + CrLf; //Header Todo typen skal læses fra fil
+
+                                                   "Content-Length: " + Convert.ToString(fs.Length) + CrLf + //Header
+                                               
+                                              
+                                                   "Content-Type: txt/html" + CrLf + CrLf;//Header Todo typen skal læses fra fil
+                                        
 
                                     DateTime fileCreatedDate = File.GetCreationTime(filename);
                                     //Console.WriteLine("file created: " + fileCreatedDate);
-
-
                                     //ns.Write(data, 0, data.Length); //data
                                     string temp = "";
-                                
+
                                     for (int i = 0; i < data.Count(); i++)
                                     {
-                                        temp+=Convert.ToChar(data[i]);
+                                        temp += Convert.ToChar(data[i]);
                                     }
-
+                                    reply += temp;
                                     sw.Write(reply);
-                                    //sw.Flush();
-                                Console.WriteLine("Dette burde være fil-indhold: "+temp);    
+                                    sw.Flush();
+                                    Console.WriteLine("Dette burde være fil-indhold: " + temp);
                                 }
-                                Console.WriteLine(""+ File.GetLastAccessTime(RootCatalog + messageSplit[1]));
+                                Console.WriteLine("" + File.GetLastAccessTime(RootCatalog + messageSplit[1]));
                             }
-                                catch (FileNotFoundException ioEx)
-                               {
-                                    Console.WriteLine(ioEx.Message);
-                               }
+                            catch (FileNotFoundException ioEx)
+                            {
+                                Console.WriteLine(ioEx.Message);
+                            }
                         }
 
- break;
+                        break;
 
                         break;
                     }
@@ -113,13 +107,9 @@ namespace httpserver
             sr.Close();
             ns.Close();
             connectionSocket.Close();
-        } 
         }
-
-
-       
-
     }
 }
+
 
 

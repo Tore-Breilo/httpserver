@@ -12,7 +12,7 @@ namespace httpserver
     class Program
     {
         // En lille smule erklæring
-        private static readonly string RootCatalog = "c:/temp";
+        
         public const string CrLf = "\r\n";
         const string Lf = "\n";
 
@@ -27,6 +27,7 @@ namespace httpserver
                 TcpClient connectionSocket = serversocket.AcceptTcpClient();
                 //Console.WriteLine("Hello http server");
                 EchoService service = new EchoService(connectionSocket);
+
                 Task.Factory.StartNew(() => service.DoIt());
 
             }
