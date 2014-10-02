@@ -1,0 +1,177 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+<<<<<<< HEAD
+using System.Text;
+using System.Threading.Tasks;
+=======
+>>>>>>> 5aeccc5e786aec1db7ffae79d944798f20757ea6
+
+namespace HttpServer
+{
+    /// <summary>
+    ///     En simpel Echo Server
+    /// </summary>
+    internal class EchoService
+
+    {
+        // En lille smule erklæring
+        private const string Sp = " ";
+        private const string CrLf = "\r\n";
+        private const string Lf = "\n";
+<<<<<<< HEAD
+
+        private static readonly string RootCatalog = "c:/temp";
+        private TcpClient connectionSocket;
+=======
+        private static readonly string RootCatalog = "C:/Temp";
+        private readonly TcpClient connectionSocket;
+>>>>>>> 5aeccc5e786aec1db7ffae79d944798f20757ea6
+
+
+        // Vores connetionsocket
+        public EchoService(TcpClient connectionSocket)
+        {
+            this.connectionSocket = connectionSocket;
+        }
+
+        //Vores DO-IT - Metode
+        internal void DoIt()
+        {
+<<<<<<< HEAD
+            Stream ns = this.connectionSocket.GetStream();
+            StreamReader sr = new StreamReader(ns);
+            StreamWriter sw = new StreamWriter(ns);
+=======
+            Stream ns = connectionSocket.GetStream();
+            var sr = new StreamReader(ns);
+            var sw = new StreamWriter(ns);
+>>>>>>> 5aeccc5e786aec1db7ffae79d944798f20757ea6
+            sw.AutoFlush = true; // automatisk "flusher"
+            //var test = new Request();
+            //test.Read(ns);
+            string message = sr.ReadLine();
+            Console.WriteLine(message);
+            
+            if (message != null && message != "")
+            {
+                string[] messageSplit = message.Split(' ');
+                switch (messageSplit[0].ToUpper())
+                {
+                    case "GET":
+                    {
+                        if (messageSplit[1] != null && messageSplit[1].Length > 0)
+                        {
+<<<<<<< HEAD
+                            try
+                            {
+                                string filename = RootCatalog + messageSplit[1];
+                                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                                {
+                                    // Read the source file into a byte array. 
+                                    byte[] data = new byte[fs.Length];
+                                    fs.Read(data,0, Convert.ToInt32(fs.Length));
+
+                                    string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + // Status line
+                                                   "Connection: close" + CrLf + //Header
+                                                   "Date: " + File.GetLastAccessTime(RootCatalog + messageSplit[1]) +
+                                                   CrLf + //Header Todo datenow
+                                                   "Server: CaKaTo/0.0.02" + CrLf + //Header
+                                                   "Last-Modified: " + File.GetLastWriteTime(RootCatalog + messageSplit[1]) + CrLf +
+                                                   //Header Todo filedate
+
+                                                   "Content-Length: " + Convert.ToString(fs.Length) + CrLf + //Header
+                                               
+                                              
+                                                   "Content-Type: txt/html" + CrLf + CrLf;//Header Todo typen skal læses fra fil
+                                        
+
+                                    DateTime fileCreatedDate = File.GetCreationTime(filename);
+                                    //Console.WriteLine("file created: " + fileCreatedDate);
+                                    //ns.Write(data, 0, data.Length); //data
+                                    string temp = "";
+
+                                    for (int i = 0; i < data.Count(); i++)
+                                    {
+                                        temp += Convert.ToChar(data[i]);
+                                    }
+                                    //reply += temp;
+                                    sw.Write(reply);
+                                    sw.Flush();
+                                    ns.Write(data, 0, data.Count()); //data
+                                    Console.WriteLine("Dette burde være fil-indhold: " + temp);
+                                }
+                                Console.WriteLine("" + File.GetLastAccessTime(RootCatalog + messageSplit[1]));
+                            }
+                            catch (FileNotFoundException ioEx)
+                            {
+                                Console.WriteLine(ioEx.Message);
+                            }
+                        }
+
+                        break;
+
+                        break;
+                    }
+                }
+            }
+            sw.Close();
+            sr.Close();
+=======
+                            using (var fr = new FileStream(RootCatalog + messageSplit[1],
+                                FileMode.Open, FileAccess.Read))
+                            {
+                                // Read the source file into a byte array. 
+                                var data = new byte[fr.Length];
+
+                                // Hvis filen ikke eksistere, så bliver der lavet en fejl 404.
+
+                                fr.Read(data, 0, Convert.ToInt32(fr.Length));
+                                string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + // Status line
+                                               "Connection: " + CrLf + //Header
+                                               "Date: " + File.GetLastAccessTime(RootCatalog + messageSplit[1]) + CrLf +
+                                               //Header Todo datenow
+                                               "Server: CaKaTo/0.0.02" + CrLf + //Header
+                                               "Last-Modified: " + File.GetLastWriteTime(RootCatalog + messageSplit[1]) +
+                                               CrLf + //Header Todo filedate
+                                               "Content-Length: " + Convert.ToString(fr.Length) + CrLf + //Header
+                                               "Content-Type: txt.html" + CrLf + CrLf;
+                                    //Header Todo typen skal læses fra fil
+
+
+                                // HESTEPIK
+                                sw.Write(reply);
+                                sw.Flush();
+                                ns.Write(data, 0, data.Count()); //data
+                                string temp = "";
+
+                                for (int i = 0; i < data.Count(); i++)
+                                {
+                                    temp += Convert.ToChar(data[i]);
+                                }
+
+                                Console.WriteLine("Dette burde være fil-indhold: " + temp);
+                            }
+                            Console.WriteLine("" + File.GetLastAccessTime(RootCatalog + messageSplit[1]));
+                        }
+                        catch (FileNotFoundException ioEx)
+                        {
+                            Console.WriteLine("404: File Not Found");
+                        }
+                    }
+
+                        break;
+                }
+            }
+
+
+>>>>>>> 5aeccc5e786aec1db7ffae79d944798f20757ea6
+            ns.Close();
+            connectionSocket.Close();
+        }
+    }
+}
+
+
+
