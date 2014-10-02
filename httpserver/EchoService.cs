@@ -61,7 +61,7 @@ namespace httpserver
                                 
                                 string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf +     // Status line
                                                "Connection: close" + CrLf +                     //Header
-                                               "Date: Tue, 09 Aug 2011 15:44:04 GMT" + CrLf +   //Header Todo datenow
+                                               "Date: " + File.GetLastAccessTime(RootCatalog+messageSplit[1]) + CrLf +   //Header Todo datenow
                                                "Server: CaKaTo/0.0.02" + CrLf +           //Header
                                                "Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT" + CrLf + //Header Todo filedate
                                                "Content-Length: " + Convert.ToString(fr.Length) + CrLf + //Header
