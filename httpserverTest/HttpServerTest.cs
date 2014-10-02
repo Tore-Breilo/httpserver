@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-using httpserver;
+using HttpServer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace httpserverTest
@@ -26,28 +26,28 @@ namespace httpserverTest
         [TestMethod]
         public void TestGetIllegalRequest()
         {
-            String line = GetFirstLine("GET /file.txt HTTP 1.0");
+            String line = GetFirstLine("GET /ost.txt HTTP 1.0");
             Assert.AreEqual("HTTP/1.0 400 Illegal request", line);
         }
 
         [TestMethod]
         public void TestGetIllegalMethodName()
         {
-            String line = GetFirstLine("PLET /file.txt HTTP/1.0");
+            String line = GetFirstLine("PLET /ost.txt HTTP/1.0");
             Assert.AreEqual("HTTP/1.0 400 Illegal request", line);
         }
 
         [TestMethod]
         public void TestGetIllegalProtocol()
         {
-            String line = GetFirstLine("GET /file.txt HTTP/1.2");
+            String line = GetFirstLine("GET /ost.txt HTTP/1.2");
             Assert.AreEqual("HTTP/1.0 400 Illegal protocol", line);
         }
 
         [TestMethod]
         public void TestMethodNotImplemented()
         {
-            String line = GetFirstLine("POST /file.txt HTTP/1.0");
+            String line = GetFirstLine("POST /ost.txt HTTP/1.0");
             Assert.AreEqual("HTTP/1.0 200 xxx", line);
         }
 
