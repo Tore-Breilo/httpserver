@@ -11,24 +11,23 @@ namespace httpserver
 {
     class Program
     {
+        // En lille smule erklæring
+        private static readonly string RootCatalog = "c:/temp";
         public const string CrLf = "\r\n";
         const string Lf = "\n";
 
         static void Main(string[] args)
         {
-            // Todo: porten bør passe med en web-browser eg. 80, 8080 eller 8888
-
             TcpListener serversocket = new TcpListener(IPAddress.Parse("127.0.0.1"),8888);
             serversocket.Start();
-            Console.WriteLine("Hello http server");
+            Console.WriteLine("Hello, this is a a very complicated HTTP Server. Access at own risk");
 
             while (true)
             {
                 TcpClient connectionSocket = serversocket.AcceptTcpClient();
                 //Console.WriteLine("Hello http server");
                 EchoService service = new EchoService(connectionSocket);
-               Task.Factory.StartNew(() => service.DoIt());
-
+                Task.Factory.StartNew(() => service.DoIt());
 
             }
             

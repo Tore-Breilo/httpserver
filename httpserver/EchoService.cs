@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +16,7 @@ namespace httpserver
     internal class EchoService
 
     {
+        // En lille smule erklæring
         private const string Sp = " ";
         private const string CrLf = "\r\n";
         private const string Lf = "\n";
@@ -25,11 +25,13 @@ namespace httpserver
         private TcpClient connectionSocket;
 
 
+        // Vores connetionsocket
         public EchoService(TcpClient connectionSocket)
         {
             this.connectionSocket = connectionSocket;
         }
 
+        //Vores DO-IT - Metode
         internal void DoIt()
         {
             Stream ns = connectionSocket.GetStream();
@@ -58,17 +60,23 @@ namespace httpserver
                                     // Read the source file into a byte array. 
                                     byte[] data = new byte[fr.Length];
 
+                                // Hvis filen ikke eksistere, så bliver der lavet en fejl 404.
+                                try
+                                {
                                     fr.Read(data, 0, Convert.ToInt32(fr.Length));
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine("404: File Not Found");
+                                }
 
-                                    // todo bør smide en file not found (4xx) hvis ej fundet
-
-                                    string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + // Status line
-                                                   "Connection: close" + CrLf + //Header
-                                                   "Date: Tue, 09 Aug 2011 15:44:04 GMT" + CrLf + //Header Todo datenow
+                               string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf +     // Status line
+                                               "Connection: "   + CrLf +                     //Header
+                                               "Date: " + File.GetLastAccessTime(RootCatalog + messageSplit[1]) + CrLf +   //Header Todo datenow
                                                    "Server: CaKaTo/0.0.02" + CrLf + //Header
-                                                   "Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT" + CrLf +
+                                               "Last-Modified: " + File.GetLastWriteTime(RootCatalog + messageSplit[1]) + CrLf + //Header Todo filedate
                                                    //Header Todo filedate
-                                                   "Content-Length: " + Convert.ToString(data.Count()) + CrLf + //Header
+                                               "Content-Type: txt.html" + CrLf + CrLf;         //Header Todo typen skal læses fra fil
                                                    "Content-Type: text/html" + CrLf; //Header Todo typen skal læses fra fil
 
                                     DateTime fileCreatedDate = File.GetCreationTime(filename);
@@ -77,22 +85,25 @@ namespace httpserver
 
                                     //ns.Write(data, 0, data.Length); //data
                                     string temp = "";
+                                
                                     for (int i = 0; i < data.Count(); i++)
                                     {
-                                        temp += Convert.ToChar(data[i]);
+                                        temp+=Convert.ToChar(data[i]);
                                     }
-                                    reply += temp;
+
                                     sw.Write(reply);
                                     //sw.Flush();
-                                    Console.WriteLine("Dette burde være fil-indhold: " + temp);
+                                Console.WriteLine("Dette burde være fil-indhold: "+temp);    
                                 }
+                                Console.WriteLine(""+ File.GetLastAccessTime(RootCatalog + messageSplit[1]));
                             }
-                            catch (FileNotFoundException ioEx)
-                            {
-                                Console.WriteLine(ioEx.Message);
-                            }
+                                catch (FileNotFoundException ioEx)
+                               {
+                                    Console.WriteLine(ioEx.Message);
+                               }
                         }
 
+ break;
 
                         break;
                     }
@@ -102,6 +113,13 @@ namespace httpserver
             sr.Close();
             ns.Close();
             connectionSocket.Close();
+        } 
         }
+
+
+       
+
     }
 }
+
+
