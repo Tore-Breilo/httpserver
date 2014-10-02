@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace httpserver
             //var test = new Request();
             //test.Read(ns);
             string message = sr.ReadToEnd();
-
+            Console.WriteLine(message);
 
             if (message != null && message != "")
             {
@@ -62,26 +63,27 @@ namespace httpserver
                                     // todo bør smide en file not found (4xx) hvis ej fundet
 
                                     string reply = "HTTP/1.0" + Sp + "200" + Sp + "OK" + CrLf + // Status line
-                                                   //"Connection: close" + CrLf + //Header
+                                                   "Connection: close" + CrLf + //Header
                                                    "Date: Tue, 09 Aug 2011 15:44:04 GMT" + CrLf + //Header Todo datenow
                                                    "Server: CaKaTo/0.0.02" + CrLf + //Header
                                                    "Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT" + CrLf +
                                                    //Header Todo filedate
-                                                   "Content-Length: " + Convert.ToString(fr.Length) + CrLf + //Header
-                                                   "Content-Type: text/html" + CrLf + CrLf;
-                                    //Header Todo typen skal læses fra fil
+                                                   "Content-Length: " + Convert.ToString(data.Count()) + CrLf + //Header
+                                                   "Content-Type: text/html" + CrLf; //Header Todo typen skal læses fra fil
 
                                     DateTime fileCreatedDate = File.GetCreationTime(filename);
-                                    Console.WriteLine("file created: " + fileCreatedDate);
-                                    sw.Write(reply);
-                                    //sw.Flush();
+                                    //Console.WriteLine("file created: " + fileCreatedDate);
 
-                                    ns.Write(data, 0, data.Length); //data
+
+                                    //ns.Write(data, 0, data.Length); //data
                                     string temp = "";
                                     for (int i = 0; i < data.Count(); i++)
                                     {
                                         temp += Convert.ToChar(data[i]);
                                     }
+                                    reply += temp;
+                                    sw.Write(reply);
+                                    //sw.Flush();
                                     Console.WriteLine("Dette burde være fil-indhold: " + temp);
                                 }
                             }
@@ -96,6 +98,8 @@ namespace httpserver
                     }
                 }
             }
+            sw.Close();
+            sr.Close();
             ns.Close();
             connectionSocket.Close();
         }
