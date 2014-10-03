@@ -26,7 +26,7 @@ namespace httpserver
         private byte[] _resultat;
         //String Requestline
 
-        string ReadLine(int pos){
+        string[] ReadLine(int pos){
             string s="";
             int count = pos;
             //læser en linie
